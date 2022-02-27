@@ -3,22 +3,25 @@ window.addEventListener('load', () => {
     const input = document.querySelector('#new-task-input');
     const list_el = document.querySelector('#tasks');
 
+    let tasks = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
+    
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+        const InputValue = input.value;
 
+                const task = {
+                    id: new Date().getTime(),
+                    task: InputValue
+                }
 
+                console.log(task)
 
-        const task = input.value;
-        console.log(task);
-
-
-
-
-        if (!task) {
+        if (InputValue === '') {
             alert(" Oga fill out The task 😒😒")
             return;
-        }
-
+        }else{
+            tasks.push(task);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
 
         const task_el = document.createElement("div");
         task_el.classList.add("task");
@@ -32,7 +35,7 @@ window.addEventListener('load', () => {
         const task_input_el = document.createElement("input")
         task_input_el.classList.add("text");
         task_input_el.type = "text";
-        task_input_el.value = task;
+        task_input_el.value = InputValue;
         task_input_el.setAttribute("readonly", "readonly");
 
         task_content_el.appendChild(task_input_el);
@@ -78,22 +81,23 @@ window.addEventListener('load', () => {
             list_el.removeChild(task_el)
         })
         task_Done_el.addEventListener('click', () => {
-            task_input_el.style.textDecoration = " 2px black line-through";
-            task_delete_el.style.visibility = "hidden";
+            task_input_el.style.textDecoration = " 2px white line-through";
+            task_input_el.style.color="grey"
             task_edit_el.style.visibility = "hidden"
-        })
-        button.addEventListener('click', () => {
-            Dan_el.removeChild(list_el)
 
         })
+        // button.addEventListener('click', () => {
+        //     Dan_el.removeChild(list_el)
+
+        // })
 
 
 
 
 
 
-
+    }
     })
-
+    
 
 })
